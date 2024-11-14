@@ -1,0 +1,41 @@
+version: '2.26.1'
+name: 'finance_app'
+#-----------------------------------------------------
+services:
+#-----------------------------------------------------
+  postgres:
+    container_name: postgres_database_container
+    image: postgres:16.3
+    environment:
+      POSTGRES_USER: "manager"
+      POSTGRES_PASSWORD: "123454321"
+      PGDATA: "/var/lib/postgresql/data/main_data"
+      POSTGRES_DB: "main_data"
+      PGUSER: "manager"
+    volumes:
+      - ./DB_setup/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - main-data:/var/lib/postgresql/data
+    ports:
+      - "5435:5432"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2G
+#-----------------------------------------------------
+  pgadmin:
+    container_name: pgadmin_container
+    image: elestio/pgadmin:REL-8_6
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "neket2305@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "123"
+    ports:
+      - "5050:80"
+    restart: unless-stopped
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+#-----------------------------------------------------
+volumes:
+  main-data:
+  pgadmin-data:
