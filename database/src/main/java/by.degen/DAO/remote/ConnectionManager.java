@@ -24,7 +24,7 @@ public class ConnectionManager {
 
     public Connection createConnection() throws SQLException{
         try {
-            fileInputStream = new FileInputStream("app/src/DAO/remote/connProp.properties");
+            fileInputStream = new FileInputStream("src/main/resources/connProp.properties");
             props.load(fileInputStream);
         }catch (IOException e){
             e.printStackTrace();
