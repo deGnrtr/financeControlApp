@@ -6,7 +6,6 @@ import by.degen.DAO.remote.Transaction;
 import by.degen.DAO.remote.UserDatabaseDAO;
 import by.degen.entities.Account;
 import by.degen.entities.User;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Optional;

@@ -1,13 +1,7 @@
 package by.degen.DAO.remote;
 
-import by.degen.DAO.Dao;
-
-import java.io.PrintStream;
-import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.SQLException;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class Transaction {
     Connection connection;

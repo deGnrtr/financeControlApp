@@ -4,8 +4,6 @@ import by.degen.entities.Currency;
 import by.degen.entities.Saving;
 import java.math.BigDecimal;
 import java.sql.*;
-import java.util.Objects;
-import java.util.Optional;
 
 public class SavingMapper {
     public static Saving getSaving (ResultSet resultSet) throws SQLException {

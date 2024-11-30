@@ -7,16 +7,12 @@ import by.degen.DAO.mappers.SavingMapper;
 import by.degen.DAO.mappers.UserMapper;
 import by.degen.entities.Account;
 import by.degen.entities.Item;
-import by.degen.entities.Saving;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 public class AccountDatabaseDAO extends AbstractDatabaseDAO<Account>{
 
