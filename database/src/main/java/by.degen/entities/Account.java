@@ -15,7 +15,7 @@ public class Account {
     private Saving saving;
     private String note;
 
-    public Account(String accountName, User user, String note) {
+    public Account(String accountName, User user, Date lastSeen) {
         this.accountName = accountName;
         this.user = user;
         this.note = note;

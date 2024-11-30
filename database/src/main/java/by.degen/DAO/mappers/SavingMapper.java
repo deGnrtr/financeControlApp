@@ -1,6 +1,7 @@
 package by.degen.DAO.mappers;
 
-import by.degen.entities.*;
+import by.degen.entities.Currency;
+import by.degen.entities.Saving;
 import java.math.BigDecimal;
 import java.sql.*;
 

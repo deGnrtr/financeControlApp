@@ -1,8 +1,12 @@
 package by.degen.DAO.remote;
 
 import by.degen.DAO.DAOException;
-import by.degen.DAO.mappers.*;
-import by.degen.entities.*;
+import by.degen.DAO.mappers.AccountMapper;
+import by.degen.DAO.mappers.ItemMapper;
+import by.degen.DAO.mappers.SavingMapper;
+import by.degen.DAO.mappers.UserMapper;
+import by.degen.entities.Account;
+import by.degen.entities.Item;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

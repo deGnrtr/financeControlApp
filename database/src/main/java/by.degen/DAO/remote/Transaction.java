@@ -11,7 +11,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class Transaction {
     Connection connection;
-    public <T> void initialize (AbstractDatabaseDAO<T> ... daos){
+    public <T> void initialize (AbstractDatabaseDAO<?> ... daos){
         if (connection == null){
             try {
                 connection = ConnectionManager.getManager().createConnection();
@@ -20,7 +20,7 @@ public class Transaction {
                e.printStackTrace();
            }
         }
-        for (AbstractDatabaseDAO<T> dao : daos) {
+        for (AbstractDatabaseDAO<?> dao : daos) {
             dao.setConnection(connection);
         }
     }
