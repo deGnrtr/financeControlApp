@@ -7,6 +7,7 @@ import by.degen.DAO.mappers.SavingMapper;
 import by.degen.DAO.mappers.UserMapper;
 import by.degen.entities.Account;
 import by.degen.entities.Item;
+import by.degen.entities.Saving;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +15,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 public class AccountDatabaseDAO extends AbstractDatabaseDAO<Account>{
 
@@ -67,12 +70,17 @@ public class AccountDatabaseDAO extends AbstractDatabaseDAO<Account>{
     @Override
     public void create(Account account) throws DAOException {
         try {
+            if (account.getSaving().isPresent()){
+                SavingMapper.uploadSaving(connection, account.getSaving().get());
+            }
+            if (account.getIncomes().isPresent() || account.getOutcomes().isPresent()){
+                List<Item> items = new ArrayList<>();
+                items.addAll(account.getOutcomes().get());
+                items.addAll(account.getIncomes().get());
+                ItemMapper.uploadItemBatch(connection, items, account.getAccountId());
+            }
             UserMapper.uploadUser(connection, account.getUser());
-            SavingMapper.uploadSaving(connection, account.getSaving());
             AccountMapper.uploadAccount(connection, account);
-            List<Item> items = account.getIncomes();
-            items.addAll(account.getOutcomes());
-            ItemMapper.uploadItemBatch(connection, items, account.getAccountId());
         } catch (SQLException e) {
             throw new DAOException("SQL error!" + e.getMessage(), e);
         }
@@ -81,15 +89,15 @@ public class AccountDatabaseDAO extends AbstractDatabaseDAO<Account>{
     @Override
     public void update(Account account, int accountID) throws DAOException {
         try {
-            List<Item> items = account.getIncomes();
-            items.addAll(account.getOutcomes());
+            List<Item> items = account.getIncomes().get();
+            items.addAll(account.getOutcomes().get());
             int[] updatedItems = ItemMapper.updateItemBatch(connection, items);
             for (int i = 0; i < updatedItems.length; i++) {
                 if (updatedItems[i] == 0){
                     ItemMapper.uploadItem(connection, items.get(i), accountID);
                 }
             }
-            SavingMapper.updateSaving(connection, account.getSaving(), account.getSaving().getSavingId());
+            SavingMapper.updateSaving(connection, account.getSaving().get(), account.getSaving().get().getSavingId());
             if (AccountMapper.updateAccount(connection, account, accountID) == 0){
                 throw new DAOException("No target account found!");
             }

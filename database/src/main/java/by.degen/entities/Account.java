@@ -1,9 +1,6 @@
 package by.degen.entities;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Account {
     private Integer accountId;
@@ -13,12 +10,12 @@ public class Account {
     private List<Item> incomes = new ArrayList<>();
     private List<Item> outcomes = new ArrayList<>();
     private Saving saving;
-    private String note;
+    private String note = "Empty note";
 
     public Account(String accountName, User user, Date lastSeen) {
         this.accountName = accountName;
         this.user = user;
-        this.note = note;
+        this.lastSeen = lastSeen;
     }
 
     public Account(String accountName, User user, Date lastSeen, List<Item> incomes, List<Item> outcomes, Saving saving, String note) {
@@ -63,24 +60,24 @@ public class Account {
         this.lastSeen = lastSeen;
     }
 
-    public List<Item> getIncomes() {
-        return incomes;
+    public Optional<List<Item>> getIncomes() {
+        return Optional.ofNullable(incomes);
     }
 
     public void setIncomes(Item income) {
         this.incomes.add(income);
     }
 
-    public List<Item> getOutcomes() {
-        return outcomes;
+    public Optional<List<Item>> getOutcomes() {
+        return Optional.ofNullable(outcomes);
     }
 
     public void setOutcomes(Item outcomes) {
         this.outcomes.add(outcomes);
     }
 
-    public Saving getSaving() {
-        return saving;
+    public Optional<Saving> getSaving() {
+        return Optional.ofNullable(saving);
     }
 
     public void setSaving(Saving saving) {

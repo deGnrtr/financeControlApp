@@ -31,12 +31,10 @@ public class UserManager {
     protected static void createUser(HashMap<String,String> params){
         User newUser = new User(params.get("username"), params.get("password"));
         Account newAccount = new Account(params.get("accountName"), newUser, new Date());
-        UserDatabaseDAO userDAO = new UserDatabaseDAO();
         AccountDatabaseDAO accountDAO = new AccountDatabaseDAO();
         Transaction transaction = new Transaction();
-        transaction.initialize(userDAO, accountDAO);
+        transaction.initialize(accountDAO);
         try{
-            userDAO.create(newUser);
             accountDAO.create(newAccount);
             transaction.commit();
         } catch (DAOException e) {
@@ -46,7 +44,7 @@ public class UserManager {
         }
     }
 
-    protected static void deleteUser(int userToDelete) throws IllegalInputDataException{
+    protected static void deleteUser(int userToDelete){
         UserDatabaseDAO userDAO = new UserDatabaseDAO();
         Transaction transaction = new Transaction();
         transaction.initialize(userDAO);

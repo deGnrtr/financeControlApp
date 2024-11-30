@@ -46,7 +46,9 @@ public class AccountMapper {
         PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, account.getName());
         statement.setInt(2, account.getUser().getUserId());
-        statement.setInt(3, account.getSaving().getSavingId());
+        if (account.getSaving().isPresent()) {
+            statement.setInt(3, account.getSaving().get().getSavingId());
+        }
         statement.setString(4, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss X").format(account.getLastSeen()));
         statement.setString(5, account.getNote());
         statement.executeUpdate();
@@ -62,7 +64,7 @@ public class AccountMapper {
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(1, account.getName());
         statement.setInt(2, account.getUser().getUserId());
-        statement.setInt(3, account.getSaving().getSavingId());
+        statement.setInt(3, account.getSaving().get().getSavingId());
         statement.setString(4, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(account.getLastSeen()));
         statement.setString(5, account.getNote());
         statement.setInt(6, accountId);

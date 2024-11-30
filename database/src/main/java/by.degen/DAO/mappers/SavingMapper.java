@@ -4,6 +4,8 @@ import by.degen.entities.Currency;
 import by.degen.entities.Saving;
 import java.math.BigDecimal;
 import java.sql.*;
+import java.util.Objects;
+import java.util.Optional;
 
 public class SavingMapper {
     public static Saving getSaving (ResultSet resultSet) throws SQLException {
@@ -17,7 +19,7 @@ public class SavingMapper {
         return requestedSaving;
     }
 
-    public static void uploadSaving (Connection conn, Saving saving) throws SQLException {
+    public static void uploadSaving (Connection conn, Saving  saving) throws SQLException {
         String sql = "INSERT INTO saving (saving_amount, " +
                 "saving_currency, interest, deposit, capitalization) VALUES (?, CAST(? AS currency), ?, ?, ?)";
         PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
