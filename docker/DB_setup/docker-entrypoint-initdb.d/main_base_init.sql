@@ -9,7 +9,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE saving (
-    saving_id SERIAL PRIMARY KEY ,
+    saving_id SERIAL PRIMARY KEY,
     saving_amount numeric NOT NULL,
     saving_currency currency NOT NULL,
     interest numeric NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE saving (
 
 CREATE TABLE account (
     account_id SERIAL PRIMARY KEY,
-    account_name text, 
+    account_name text UNIQUE NOT NULL, 
     user_id integer UNIQUE CONSTRAINT FK_users REFERENCES users ON DELETE CASCADE,
     saving_id integer UNIQUE CONSTRAINT FK_saving REFERENCES saving ON DELETE RESTRICT,
     last_seen timestamptz,

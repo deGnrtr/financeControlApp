@@ -1,12 +1,10 @@
 package entityManagers;
 
 import by.degen.DAO.DAOException;
-import by.degen.DAO.remote.AccountDatabaseDAO;
 import by.degen.DAO.remote.Transaction;
 import by.degen.DAO.remote.UserDatabaseDAO;
 import by.degen.entities.Account;
 import by.degen.entities.User;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -27,20 +25,21 @@ public class UserManager {
         return Optional.ofNullable(user);
     }
 
-    protected static void createUser(HashMap<String,String> params){
+    protected static User createUser(HashMap<String,String> params){
         User newUser = new User(params.get("username"), params.get("password"));
-        Account newAccount = new Account(params.get("accountName"), newUser, new Date());
-        AccountDatabaseDAO accountDAO = new AccountDatabaseDAO();
+        Account newAccount = AccountManager.createAccount(params, newUser);
+        UserDatabaseDAO userDAO = new UserDatabaseDAO();
         Transaction transaction = new Transaction();
-        transaction.initialize(accountDAO);
+        transaction.initialize(userDAO);
         try{
-            accountDAO.create(newAccount);
+            userDAO.create(newUser);
             transaction.commit();
         } catch (DAOException e) {
             transaction.rollback();
         }finally {
             transaction.end();
         }
+        return newUser;
     }
 
     protected static void deleteUser(int userToDelete){
