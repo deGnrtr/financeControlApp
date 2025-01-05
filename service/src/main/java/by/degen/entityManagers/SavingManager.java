@@ -1,7 +1,6 @@
-package entityManagers;
+package by.degen.entityManagers;
 
 import by.degen.DAO.DAOException;
-import by.degen.DAO.remote.AccountDatabaseDAO;
 import by.degen.DAO.remote.SavingDatabaseDAO;
 import by.degen.DAO.remote.Transaction;
 import by.degen.entities.Currency;

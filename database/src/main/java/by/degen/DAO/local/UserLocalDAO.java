@@ -3,7 +3,6 @@ package by.degen.DAO.local;
 import by.degen.DAO.DAOException;
 import by.degen.entities.User;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class UserLocalDAO extends AbstractLocalDAO<User> {

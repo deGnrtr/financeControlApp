@@ -1,6 +1,5 @@
 package by.degen.DAO;
 
-import java.util.HashMap;
 import java.util.List;
 
 public interface Dao<T> {

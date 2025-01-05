@@ -1,4 +1,4 @@
-package entityManagers;
+package by.degen.entityManagers;
 
 import by.degen.DAO.DAOException;
 import by.degen.DAO.remote.ItemDatabaseDAO;
