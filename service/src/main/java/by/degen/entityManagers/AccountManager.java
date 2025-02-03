@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Optional;
 
 public class AccountManager {
-    protected static Optional<Account> getAccount(int requestedAccount){
+    public static Optional<Account> getAccount(int requestedAccount){
         AccountDatabaseDAO accountDAO = new AccountDatabaseDAO();
         Transaction transaction = new Transaction();
         transaction.initialize(accountDAO);

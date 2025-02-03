@@ -3,33 +3,38 @@ package by.degen.DAO.remote;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
 public class ConnectionManager {
-    FileInputStream fileInputStream;
-    Properties props = new Properties();
-    private static ConnectionManager manager;
+    private static final Properties CONN_PROPERTIES = new Properties();
+    public static Connection connection;
+//    private ConnectionManager manager;
 
     private ConnectionManager(){}
 
-    public static ConnectionManager getManager(){
+    /*public ConnectionManager getManager(){
         if (manager == null){
             manager = new ConnectionManager();
         }
         return manager;
-    }
+    }*/
 
-    public Connection createConnection() throws SQLException{
+    public static Connection createConnection() throws SQLException{
         try {
-            fileInputStream = new FileInputStream("src/main/resources/connProp.properties");
-            props.load(fileInputStream);
+            InputStream InputStream = ConnectionManager.class.getResourceAsStream("/connProp.properties");
+            CONN_PROPERTIES.load(InputStream);
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection(CONN_PROPERTIES.getProperty("URL"), CONN_PROPERTIES);
+        }catch (ClassNotFoundException c){
+            c.printStackTrace();
         }catch (IOException e){
             e.printStackTrace();
         }
-        return DriverManager.getConnection(props.getProperty("URL"), props);
+        return connection;
     }
 
 

@@ -25,23 +25,36 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+                <configuration>
+                    <propertiesEncoding>ISO-8859-1</propertiesEncoding>
+                    <encoding>ISO-8859-1</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+
     <profiles>
         <profile>
             <id>release</id>
             <properties>
-                <URL>jdbc:postgresql://localhost:5435/main_data</URL>
-                <user>manager</user>
-                <password>123454321</password>
-                <ssl>false</ssl>
+                <URL.for.database>jdbc:postgresql://localhost:5435/main_data</URL.for.database>
+                <user.for.database>manager</user.for.database>
+                <password.for.database>123454321</password.for.database>
+                <ssl.for.database>false</ssl.for.database>
             </properties>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src\main\resources\</directory>
-                        <filtering>true</filtering>
-                    </resource>
-                </resources>
-            </build>
         </profile>
 
         <profile>
@@ -50,19 +63,11 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <URL>jdbc:postgresql://localhost:5432/test_fin_app</URL>
-                <user>postgres</user>
-                <password>123</password>
-                <ssl>false</ssl>
+                <URL.for.database>jdbc:postgresql://localhost:5432/test_fin_app</URL.for.database>
+                <user.for.database>postgres</user.for.database>
+                <password.for.database>123</password.for.database>
+                <ssl.for.database>false</ssl.for.database>
             </properties>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src\main\resources\</directory>
-                        <filtering>true</filtering>
-                    </resource>
-                </resources>
-            </build>
         </profile>
     </profiles>
 

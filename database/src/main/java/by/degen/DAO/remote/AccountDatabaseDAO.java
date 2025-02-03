@@ -18,7 +18,7 @@ public class AccountDatabaseDAO extends AbstractDatabaseDAO<Account>{
 
     @Override
     public Account findById(int id) throws DAOException {
-        String quarry = "SELECT * FROM all_accounts" +
+        String quarry = "SELECT * FROM all_accounts " +
                 "WHERE account_id = (?)";
         try (PreparedStatement statement = connection.prepareStatement(quarry, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
             statement.setInt(1, id);
