@@ -1,6 +1,16 @@
-CREATE TYPE currency AS ENUM ('USD', 'EUR', 'RUB', 'BYN');
+CREATE TABLE currency (
+    currency_name varchar(10) PRIMARY KEY
+);
 
-CREATE TYPE time_period AS ENUM ('YEAR', 'QUARTER', 'MONTH', 'DAY', 'HOUR');
+INSERT INTO currency
+    VALUES  ('USD'), ('EUR'), ('RUB'), ('BYN');
+
+CREATE TABLE time_period (
+    time_period_name varchar(10) PRIMARY KEY
+);
+
+INSERT INTO time_period
+    VALUES  ('YEAR'), ('QUARTER'), ('MONTH'), ('DAY'), ('HOUR');
 
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
@@ -11,7 +21,7 @@ CREATE TABLE users (
 CREATE TABLE saving (
     saving_id SERIAL PRIMARY KEY,
     saving_amount numeric NOT NULL,
-    saving_currency currency NOT NULL,
+    saving_currency varchar(10) CONSTRAINT FK_currency REFERENCES currency ON DELETE RESTRICT,
     interest numeric NOT NULL,
     deposit boolean NOT NULL,
     capitalization boolean NOT NULL
@@ -28,17 +38,17 @@ CREATE TABLE account (
 
 CREATE TABLE item (
     item_id SERIAL PRIMARY KEY ,
-    title varchar(20) NOT NULL,
+    title varchar(40) NOT NULL,
     item_amount numeric NOT NULL,
-    item_currency currency NOT NULL,
-    time_period time_period NOT NULL,
+    item_currency varchar(10) CONSTRAINT FK_currency REFERENCES currency ON DELETE RESTRICT,
+    time_period varchar(10) CONSTRAINT FK_time_period REFERENCES time_period ON DELETE RESTRICT,
     icon varchar(40) NOT NULL,
     account_id integer CONSTRAINT FK_account REFERENCES account ON DELETE CASCADE 
 );    
 
-CREATE VIEW all_accounts AS 
+CREATE VIEW all_accounts AS
 SELECT a.account_id, account_name, a.user_id, a.saving_id, last_seen, a.note, saving_amount, s.saving_currency, interest, deposit, capitalization, i.item_id, i.title, 
 	item_amount, i.item_currency, time_period, i.icon, username, u.password
-FROM account a LEFT JOIN saving s ON a.saving_id = s.saving_id 
-LEFT JOIN item i ON a.account_id = i.account_id 
+FROM account a LEFT JOIN saving s ON a.saving_id = s.saving_id
+LEFT JOIN item i ON a.account_id = i.account_id
 LEFT JOIN users u ON a.user_id = u.user_id;    
