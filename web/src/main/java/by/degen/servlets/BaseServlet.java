@@ -22,7 +22,7 @@ public class BaseServlet extends HttpServlet {
         if (accountWrapped.isPresent()){
             Account account = accountWrapped.get();
             outputTest = account.getName();
-        } else outputTest = "placeholder";
+        } else outputTest = "No such account found!";
         resp.setContentType("text/plain");
         resp.setCharacterEncoding("UTF-8");
         PrintWriter result = resp.getWriter();
